@@ -2,10 +2,6 @@
 
 A computer vision project that combines traditional image processing with modern AI for face detection and depth estimation. Built as part of CS 5330 Computer Vision coursework.
 
-**Authors:** Bhumika Yadav, Ishan Chaudhary  
-**Course:** CS 5330 Computer Vision, Fall 2025  
-**Institution:** Northeastern University  
-
 ## What This Project Does
 
 This project started as a way to learn computer vision fundamentals, but ended up being pretty cool. It can:
