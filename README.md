@@ -1,193 +1,143 @@
-# Computer Vision Project - Image Processing & Depth Estimation
+# FaceDepth-Vision
+
+A computer vision project that combines traditional image processing with modern AI for face detection and depth estimation. Built as part of CS 5330 Computer Vision coursework.
 
 **Authors:** Bhumika Yadav, Ishan Chaudhary  
 **Course:** CS 5330 Computer Vision, Fall 2025  
 **Institution:** Northeastern University  
 
-## Overview
+## What This Project Does
 
-This project demonstrates advanced computer vision techniques including custom image filtering, face detection, depth estimation using deep learning, and real-time video processing. The implementation showcases both traditional computer vision algorithms and modern AI-based approaches for depth perception.
+This project started as a way to learn computer vision fundamentals, but ended up being pretty cool. It can:
 
-## Features
+- Apply various image filters (blur, edge detection, sepia, etc.)
+- Detect faces in real-time using your webcam
+- Estimate depth using AI (Depth Anything v2)
+- Combine face detection with depth info for some neat effects
 
-### 🖼️ Image Filtering & Effects
-- **Custom Grayscale**: Inverted red channel grayscale conversion
-- **Sepia Tone**: Classic sepia filter with linear transformations
-- **Blur Algorithms**: Both naive 5x5 blur and optimized separable blur
-- **Sobel Edge Detection**: X and Y gradient computation with magnitude calculation
-- **Advanced Effects**: Emboss, median filtering, color quantization
-- **Face-Aware Processing**: Blur outside faces, color pop with face protection
+The cool part is that it blends old-school computer vision techniques with modern deep learning - you get to see how both approaches work together.
 
-### 🧠 Deep Learning Integration
-- **Depth Anything v2**: Real-time depth estimation using ONNX Runtime
-- **Temporal Smoothing**: Exponential moving average for stable depth maps
-- **Depth-Based Effects**: Selective desaturation based on depth information
+## Example Results
 
-### 👤 Face Detection
-- **Haar Cascade**: Real-time face detection using OpenCV
-- **Face Protection**: Preserve face regions during background processing
-- **Multiple Effects**: Color faces while desaturating background
+Here are some of the effects you can create:
+
+### Face Detection with Background Blur
+![Face Detection with Background Blur](results/face_detection/capture_face.jpg)
+*Detects faces and blurs everything else in the background. The face stays sharp while the background gets a nice blur effect.*
+
+### Edge Detection
+![Edge Detection](results/filtering/capture_sobel_x.jpg)
+*Sobel edge detection showing horizontal edges. This is one of the classic computer vision techniques - finding where brightness changes rapidly.*
+
+### Depth Estimation
+![Depth Estimation](results/depth/capture_depth.jpg)
+*AI-powered depth estimation. Closer objects are brighter, farther objects are darker. This uses the Depth Anything v2 model.*
 
 ## Project Structure
 
 ```
-Project-1/
-├── src/                    # Source code
-│   ├── filters.cpp         # Image filtering implementations
-│   ├── filters.h           # Filter function declarations
-│   ├── blur_benchmark.cpp  # Performance comparison
+FaceDepth-Vision/
+├── src/                    # Main source code
+│   ├── filters.cpp         # All the image filters
+│   ├── blur_benchmark.cpp  # Speed comparison between blur methods
 │   ├── sobel_test.cpp      # Edge detection testing
-│   ├── da2_demo.cpp        # Depth Anything v2 demo
-│   ├── imgDisplay.cpp      # Image display utilities
-│   └── vidDisplay.cpp      # Video display utilities
+│   └── da2_demo.cpp        # Depth estimation demo
+├── faceDetect/             # Face detection stuff
+│   ├── faceDetect.cpp      # Haar cascade face detection
+│   └── haarcascade_frontalface_alt2.xml  # The face detection model
 ├── da2-code/               # Depth Anything v2 integration
-│   ├── DA2Network.hpp      # ONNX Runtime wrapper
-│   ├── model_fp16.onnx     # Pre-trained depth model
-│   └── *.cpp               # Example implementations
-├── faceDetect/             # Face detection module
-│   ├── faceDetect.cpp      # Haar cascade implementation
-│   ├── faceDetect.h        # Face detection declarations
-│   └── haarcascade_frontalface_alt2.xml
-├── opencv/                 # OpenCV installation
-├── bin/                    # Compiled executables
-└── results/                # Output images and results
+│   ├── DA2Network.hpp      # Wrapper for ONNX Runtime
+│   └── *.cpp               # Example code
+├── results/                # Output images organized by type
+└── data/                   # Sample images for testing
 ```
 
-## Results Gallery
+## Getting Started
 
-The project includes comprehensive results organized in the `results/` directory:
+### What You'll Need
 
-### Image Filtering Results (`results/filtering/`)
-- **Grayscale Conversion**: Custom red-channel inversion (`capture_color.jpg`)
-- **Sepia Tone**: Vintage photography effect (`capture_sepia.jpg`)
-- **Blur Effects**: Naive vs optimized separable blur comparison (`capture_naive_blur.jpg`, `capture_blur_quant.jpg`)
-- **Edge Detection**: Sobel X/Y gradients and magnitude (`capture_sobel_x.jpg`, `capture_sobel_y.jpg`, `capture_magnitude.jpg`)
-- **Advanced Effects**: Emboss (`capture_emboss.jpg`), median filtering (`capture_median5x5.jpg`)
+1. **OpenCV** - The main computer vision library
+   - Download from: https://github.com/opencv/opencv/releases
+   - Or install via package manager:
+     - Windows: Use the pre-built binaries
+     - Linux: `sudo apt install libopencv-dev`
+     - macOS: `brew install opencv`
 
-### Face Detection & Processing (`results/face_detection/`)
-- **Face Detection**: Real-time face detection with bounding boxes (`capture_face.jpg`)
-- **Face-Aware Blur**: Background blur while preserving faces (`capture_blur_outside_faces.jpg`)
-- **Color Pop**: Selective colorization with face protection (`capture_color_pop.jpg`)
-- **Depth-Based Effects**: Distance-based desaturation (`capture_desat.jpg`)
+2. **ONNX Runtime** (only if you want depth estimation)
+   - Download from: https://github.com/microsoft/onnxruntime/releases
+   - Get version 1.22.1 or compatible
 
-### Depth Estimation (`results/depth/`)
-- **Real-time Depth**: Depth Anything v2 model inference (`capture_depth.jpg`)
-- **Temporal Smoothing**: Stable depth maps with noise reduction
-- **Depth Visualization**: Grayscale depth representation
-- **Interactive Effects**: Depth-based selective processing
+3. **Depth Anything v2 Model** (only for depth features)
+   - Download from: https://huggingface.co/depth-anything/Depth-Anything-V2-Small/tree/main
+   - Get the `model_fp16.onnx` file (~47MB)
+   - Put it in the `da2-code/` folder
 
-### Performance Benchmarks (`results/benchmarks/`)
-- **Blur Performance**: Naive vs separable blur timing comparison (`capture_benchmark_naive.jpg`, `capture_benchmark_fast.jpg`)
-- **Processing Speed**: Real-time performance metrics
+4. **CMake** - For building the project
+   - Download from: https://cmake.org/download/
+   - Or install via package manager
 
-## Technical Implementation
+5. **C++ Compiler**
+   - Windows: Visual Studio 2019+ or MinGW
+   - Linux: GCC 7+ or Clang 5+
+   - macOS: Xcode command line tools
 
-### Performance Optimizations
-- **Separable Convolution**: 2-pass blur for O(n) complexity vs O(n²)
-- **Pointer Arithmetic**: Efficient memory access patterns
-- **Integer Approximation**: Fast Gaussian-like kernels
-- **Temporal Smoothing**: EMA for stable real-time processing
-
-### Deep Learning Pipeline
-- **ONNX Runtime**: Cross-platform model inference
-- **Dynamic Input**: Flexible image size handling
-- **Normalization**: Proper input preprocessing for depth models
-- **Output Scaling**: Depth map visualization and processing
-
-### Face Detection Pipeline
-- **Haar Cascades**: Robust frontal face detection
-- **Multi-scale**: Detection at different image sizes
-- **Histogram Equalization**: Improved detection accuracy
-- **Bounding Box Processing**: Face region extraction and protection
-
-## Prerequisites & Installation
-
-### Required Software
-
-#### 1. **OpenCV 4.x** - Computer Vision Library
-- **Download**: [OpenCV Releases](https://github.com/opencv/opencv/releases)
-- **Recommended Version**: OpenCV 4.8.0 or later
-- **Installation Guides**:
-  - **Windows**: [OpenCV Windows Installation](https://docs.opencv.org/4.x/d3/d52/tutorial_windows_install.html)
-  - **Linux**: `sudo apt install libopencv-dev` (Ubuntu/Debian)
-  - **macOS**: `brew install opencv` (using Homebrew)
-
-#### 2. **ONNX Runtime** - Deep Learning Inference (Optional for Depth Features)
-- **Download**: [Microsoft ONNX Runtime Releases](https://github.com/microsoft/onnxruntime/releases)
-- **Recommended Version**: 1.22.1 or compatible
-- **Platform-specific packages**:
-  - Windows: `onnxruntime-win-x64-1.22.1.zip`
-  - Linux: `onnxruntime-linux-x64-1.22.1.tgz`
-  - macOS: `onnxruntime-osx-x64-1.22.1.tgz`
-
-#### 3. **Depth Anything v2 Model** - Pre-trained Depth Estimation Model
-- **Download**: [Depth Anything v2 Model](https://huggingface.co/depth-anything/Depth-Anything-V2-Small/tree/main)
-- **File**: `model_fp16.onnx` (~47MB)
-- **Place in**: `da2-code/` directory
-- **Alternative**: Download from [official repository](https://github.com/DepthAnything/Depth-Anything-V2)
-
-#### 4. **CMake** - Build System
-- **Download**: [CMake Official Website](https://cmake.org/download/)
-- **Minimum Version**: 3.10
-- **Platform-specific**:
-  - Windows: Download installer from cmake.org
-  - Linux: `sudo apt install cmake` (Ubuntu/Debian)
-  - macOS: `brew install cmake` (using Homebrew)
-
-#### 5. **C++ Compiler**
-- **Windows**: Visual Studio 2019+ or MinGW
-- **Linux**: GCC 7+ or Clang 5+
-- **macOS**: Xcode Command Line Tools (`xcode-select --install`)
-
-### Quick Setup Scripts
-
-#### Windows (PowerShell)
-```powershell
-# Install dependencies using package managers
-winget install Kitware.CMake
-winget install Microsoft.VisualStudio.2022.BuildTools
-
-# Download OpenCV and ONNX Runtime manually from links above
-```
-
-#### Linux (Ubuntu/Debian)
-```bash
-sudo apt update
-sudo apt install build-essential cmake libopencv-dev
-# Download ONNX Runtime manually from releases page
-```
-
-#### macOS
-```bash
-# Install Homebrew if not already installed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install dependencies
-brew install cmake opencv
-# Download ONNX Runtime manually from releases page
-```
-
-## Building the Project
+### Building
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd Project-1
+# Clone this repo
+git clone https://github.com/Ishan2OO1/FaceDepth-Vision.git
+cd FaceDepth-Vision
 
-# Build with CMake
+# Build it
 mkdir build && cd build
 cmake ..
 make
 
-# Run executables from bin/ directory
-./bin/blur_benchmark.exe
-./bin/da2_demo.exe
-./bin/sobel_test.exe
+# Run some demos
+./bin/blur_benchmark    # Compare blur algorithms
+./bin/sobel_test        # Test edge detection
+./bin/da2_demo          # Depth estimation (if you have the model)
 ```
 
-## Usage Examples
+## How It Works
 
 ### Image Filtering
+
+The project implements several filters from scratch:
+
+- **Grayscale**: Custom version that inverts the red channel (just for fun)
+- **Sepia**: Classic vintage photo effect
+- **Blur**: Both a "naive" version and an optimized separable version
+- **Sobel Edge Detection**: Finds edges using gradient calculations
+- **Emboss**: Creates a 3D embossed effect
+
+### Face Detection
+
+Uses OpenCV's Haar cascades to detect faces. The cool part is that it can then apply different effects based on whether a pixel is inside a face or not - like blurring the background while keeping faces sharp.
+
+### Depth Estimation
+
+This is where it gets interesting. Uses the Depth Anything v2 model to estimate how far objects are from the camera. Then you can do things like:
+
+- Desaturate distant objects (make them grayscale)
+- Keep close objects in full color
+- Create depth-based effects
+
+The model runs in real-time on a webcam feed, which is pretty neat.
+
+### Performance Optimizations
+
+Learned a lot about optimization while building this:
+
+- **Separable convolution**: Instead of a 5x5 blur kernel, do two 1D passes. Much faster.
+- **Pointer arithmetic**: Direct memory access instead of using OpenCV's `at<>()` function
+- **Integer math**: Avoid floating point where possible
+
+The separable blur is about 3x faster than the naive version.
+
+## Code Examples
+
+### Basic Image Filtering
 ```cpp
 #include "filters.h"
 
@@ -197,22 +147,8 @@ cv::Mat dst;
 // Apply custom grayscale
 greyscale(src, dst);
 
-// Apply separable blur
-blur5x5_2(src, dst);
-
-// Face-aware blur
-blurOutsideFaces(src, dst);
-```
-
-### Depth Estimation
-```cpp
-#include "DA2Network.hpp"
-
-DA2Network net("model_fp16.onnx");
-cv::Mat frame, depth;
-
-net.set_input(frame, 0.5f);  // Half resolution for speed
-net.run_network(depth, frame.size());
+// Apply blur
+blur5x5_2(src, dst);  // The fast separable version
 ```
 
 ### Face Detection
@@ -223,54 +159,62 @@ cv::Mat gray;
 cv::cvtColor(src, gray, cv::COLOR_BGR2GRAY);
 std::vector<cv::Rect> faces;
 detectFaces(gray, faces);
+
+// Now faces contains bounding boxes of detected faces
 ```
 
-## Performance Metrics
-
-- **Separable Blur**: ~3x faster than naive implementation
-- **Depth Inference**: Real-time processing at 0.5x resolution
-- **Face Detection**: 30+ FPS on standard hardware
-- **Memory Efficiency**: Optimized pointer access patterns
-
-## Key Algorithms
-
-### Sobel Edge Detection
-- Separable 3x3 kernels for X and Y gradients
-- Signed 16-bit intermediate results
-- Per-channel magnitude computation
-- Proper edge handling and normalization
-
 ### Depth Estimation
-- Depth Anything v2 model integration
-- Dynamic input sizing with proper normalization
-- Temporal smoothing with exponential moving average
-- Median filtering for noise reduction
+```cpp
+#include "DA2Network.hpp"
 
-### Face-Aware Processing
-- Haar cascade face detection
-- Mask generation for face regions
-- Selective processing based on detected faces
-- Real-time performance optimization
+DA2Network net("da2-code/model_fp16.onnx");
+cv::Mat frame, depth;
 
-## Future Enhancements
+net.set_input(frame, 0.5f);  // Half resolution for speed
+net.run_network(depth, frame.size());
+// depth now contains the depth map
+```
 
-- [ ] GPU acceleration for depth inference
-- [ ] Additional face detection algorithms (MTCNN, RetinaFace)
-- [ ] More advanced depth-based effects
-- [ ] Multi-threading for parallel processing
-- [ ] Mobile platform support
+## What I Learned
+
+This project was a great way to learn:
+
+- How computer vision algorithms actually work (not just calling OpenCV functions)
+- The difference between naive and optimized implementations
+- How to integrate deep learning models into C++ applications
+- Performance optimization techniques
+- Real-time video processing
+
+The face detection + depth estimation combo creates some really cool effects that you don't see in typical computer vision tutorials.
+
+## Performance Notes
+
+- **Blur algorithms**: Separable version is ~3x faster than naive
+- **Depth inference**: Runs at about 10-15 FPS on a decent CPU
+- **Face detection**: 30+ FPS easily
+- **Memory usage**: Optimized pointer access patterns help keep it efficient
+
+## Future Ideas
+
+If I had more time, I'd add:
+
+- GPU acceleration for the depth model
+- More face detection algorithms (MTCNN, RetinaFace)
+- Additional depth-based effects
+- Multi-threading for better performance
+- Mobile app version
+
+## Credits
+
+- **OpenCV**: For the computer vision foundation
+- **Depth Anything v2**: Amazing depth estimation model
+- **ONNX Runtime**: Makes it easy to run models in C++
+- **Bruce Maxwell**: Course instructor who taught us the fundamentals
 
 ## License
 
-This project is developed for educational purposes as part of CS 5330 Computer Vision coursework.
-
-## Acknowledgments
-
-- **Depth Anything v2**: State-of-the-art depth estimation model
-- **OpenCV Community**: Comprehensive computer vision library
-- **ONNX Runtime**: Efficient model inference framework
-- **Course Instructors**: Bruce A. Maxwell and teaching staff
+This is a student project for educational purposes. Feel free to use the code for learning, but please don't submit it as your own work.
 
 ---
 
-*This project showcases the integration of traditional computer vision techniques with modern deep learning approaches, demonstrating both algorithmic understanding and practical implementation skills.*
+*Built with C++, OpenCV, and a lot of debugging. The combination of traditional computer vision and modern AI creates some really interesting possibilities.*
