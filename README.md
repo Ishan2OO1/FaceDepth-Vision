@@ -19,14 +19,17 @@ Here are some of the effects you can create:
 
 ### Face Detection with Background Blur
 ![Face Detection with Background Blur](results/face_detection/capture_face.jpg)
+
 *Detects faces and blurs everything else in the background. The face stays sharp while the background gets a nice blur effect.*
 
 ### Edge Detection
 ![Edge Detection](results/filtering/capture_sobel_x.jpg)
+
 *Sobel edge detection showing horizontal edges. This is one of the classic computer vision techniques - finding where brightness changes rapidly.*
 
 ### Depth Estimation
 ![Depth Estimation](results/depth/capture_depth.jpg)
+
 *AI-powered depth estimation. Closer objects are brighter, farther objects are darker. This uses the Depth Anything v2 model.*
 
 ## Project Structure
