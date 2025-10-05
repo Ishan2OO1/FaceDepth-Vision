@@ -1,0 +1,88 @@
+# Compiled Object files
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# Compiled binaries (generated during build)
+bin/
+
+# Large data files that can be generated
+*.yml
+*.yaml
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# CMake build directories
+build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Visual Studio
+.vs/
+*.vcxproj*
+*.sln
+*.user
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Large model files (keep the actual model but ignore large downloads)
+*.zip
+*.tar.gz
+*.7z
+
+# Exclude large ONNX Runtime files (they can be downloaded separately)
+onnxruntime_nupkg/
+microsoft.ml.onnxruntime.*.zip
+
+# Exclude large OpenCV binaries (keep sources and headers)
+opencv/build/bin/
+opencv/build/x64/
+opencv/build/java/
+opencv/build/python/
+
+# Runtime data
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+
+# IDE files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Keep important files
+!da2-code/model_fp16.onnx
+!faceDetect/haarcascade_frontalface_alt2.xml
+
+# Keep result images for documentation
+!capture_*.jpg
+!me.jpg
+
+# Exclude large OpenCV installation - users will install separately
+opencv/
